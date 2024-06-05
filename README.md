@@ -69,3 +69,7 @@ Once the environment is set up, you can run the Django development server:
 
 ```bash
 python manage.py runserver
+```
+
+### Video Demonstration
+!Video Link [https://luxshtech-my.sharepoint.com/:v:/p/stebin_george/Eb8tf62_9spKqAXlq_dI-QUBnRpOM12gK-roQFx7vHgqbA?e=lXlBSH]
