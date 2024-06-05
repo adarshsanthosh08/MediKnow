@@ -22,26 +22,46 @@ To set up the environment for this project, follow these steps:
     cd your-repository
     ```
 
-3. Install the required dependencies:
+3. Create a virtual environment:
+
+    ```bash
+    python -m venv env
+    ```
+
+4. Activate the virtual environment:
+
+    - **Windows:**
+
+    ```bash
+    env\Scripts\activate
+    ```
+
+    - **Linux/macOS:**
+
+    ```bash
+    source env/bin/activate
+    ```
+
+5. Install the required dependencies:
 
     ```bash
     pip install -r requirements.txt
     ```
 
-4. Collect static files:
+6. Collect static files:
 
     ```bash
     python manage.py collectstatic
     ```
 
-5. Make database migrations:
+7. Make database migrations:
 
     ```bash
     python manage.py makemigrations
     python manage.py migrate
     ```
 
-6. Replace the path to the custom NER model in the `views.py` file located in the `user` folder with the path to your trained NER model.
+8. Replace the path to the custom NER model in the `views.py` file located in the `user` folder with the path to your trained NER model.
 
 ### Usage
 
