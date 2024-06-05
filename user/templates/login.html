@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            background-image: url('https://img.pikbest.com/ai/illus_our/20230426/72368d3eab070938f1329197ac66fac7.jpg!w700wp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            text-align: center;
+            width: 300px;
+            margin-top: -50px; /* Adjusted to bring it to the center-top */
+            margin-left: -30px; /* Moved more to the left */
+        }
+        
+        .title {
+            color: #fff;
+            font-size: 32px;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+            letter-spacing: 2px; 
+            margin-bottom: 20px; /* Increased margin to push it further down */
+            white-space: nowrap; /* Prevents text from wrapping */
+            margin-left: -200px; /* Moved more to the left */
+        }
+        
+        .login { 
+            width: 100%;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5); /* Changed to a darker shade */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .login h1 { 
+            color: #fff; 
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+            letter-spacing: 1px; 
+            text-align: center; 
+            margin-bottom: 20px;
+            font-size: 24px; /* Increased font size for consistency */
+        }
+        
+        input { 
+            width: calc(100% - 20px); 
+            margin-bottom: 10px; 
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            outline: none;
+            padding: 10px;
+            font-size: 13px;
+            color: #eee; /* Changed font color to dark white */
+            border-radius: 4px;
+        }
+        
+        input:focus { 
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn { 
+            width: 100%; 
+            padding: 10px; 
+            font-size: 18px; 
+            background-color: #4a77d4; 
+            color: #fff; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover { 
+            background-color: #3762bc; 
+        }
+
+        .login a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .login a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>Medical Data Recognition</h1>
+        </div>
+        <div class="login">
+            <h1>Login</h1>
+            <form method="post" action="{% url 'login' %}">  <!-- Use the named URL -->
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="Username" required="required" />
+                <input type="password" name="password" placeholder="Password" required="required" />
+                <button type="submit" class="btn btn-primary btn-block btn-large">Let me in.</button>
+            </form>
+            {% if error %}
+                <p>{{ error }}</p>
+            {% endif %}
+            <a href="{% url 'sign_up' %}">Not registered?</a>
+        </div>
+    </div>

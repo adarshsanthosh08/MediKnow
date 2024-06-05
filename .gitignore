@@ -1,0 +1,3 @@
+# Ignore the model-best-version 1 directory
+model-best-version 1/
+static/
