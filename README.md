@@ -1,6 +1,13 @@
 ## Custom NER for Medical Data Using SpaCy
 
-This repository contains a custom Named Entity Recognition (NER) system tailored for medical data using SpaCy. The NER model is trained to identify specific entities relevant to the medical domain, such as diseases, treatments, symptoms, and more.
+This repository contains a custom Named Entity Recognition (NER) system tailored for medical data using SpaCy. The NER model is trained to identify specific entities relevant to the medical domain, such as [diseases](#), [treatments](#), [symptoms](#), and more.
+
+The categories include:
+
+- [Medical Name](#)
+- [Category](#)
+- [Strength](#)
+- [Pack](#)
 
 ### Description
 
