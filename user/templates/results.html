@@ -1,84 +1,183 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>DisplaCify App</title>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'main.css' %}" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Data Recognition - Result</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            background-image: url('https://img.pikbest.com/ai/illus_our/20230426/72368d3eab070938f1329197ac66fac7.jpg!w700wp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh; /* Set minimum height to cover the viewport */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    <style type="text/css">
-        .main-section {
-            margin: 0 auto;
-            padding: 20px;
-            margin-top: 100px;
-            background-color: #fff;
-            box-shadow: 0px 0px 20px #c1c1c1;
-        }
-        #custom_card {
-            background-color: grey;
-            color: #fff;
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 5px; /* Reduced gap between title and containers */
+            justify-content: space-between;
             padding: 10px;
+            gap: 2%; /* Gap between left and right containers */
+            box-sizing: border-box;
+            flex-grow: 1; /* Allow content to take up available space */
         }
-        #custom_card2 {
-            background-color: #383838;
+
+        .title {
             color: #fff;
-            padding: 10px;
+            font-size: 24px;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+            text-align: center;
+            margin-bottom: 10px; /* Reduced margin */
+            width: 100%;
         }
+
+        .left-container,
+        .right-container {
+            width: 48%;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .result h1 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .card {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .error-message {
+            color: #ff3333;
+            margin-top: 10px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .btn-refresh {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #4a77d4;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+
+        .btn-refresh:hover {
+            background-color: #3762bc;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        li strong {
+            font-weight: bold;
+        }
+
+        /* Text Justification for Right Container */
+        .right-container p {
+            text-align: justify;
+            line-height: 1.6;
+        }
+
+        h4 {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
     </style>
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.3/css/mdb.min.css" rel="stylesheet">
-
 </head>
 <body>
 
-<div class="jumbotron" style="background:#673AB7;color:#fff">
-    <div class="container">
-        <h2 class="display-3">Displaying Medical Data</h2>
-        <p>Using Spacy's Custom Named Entity Recognition System</p>
-        <p><a class="btn btn-success waves-effect btn-lg" href="{% url 'index' %}" role="button">Refresh &raquo;</a></p>
-    </div>
+<!-- Common Title -->
+<div class="title">
+    <h1>Medical Analyzer</h1>
 </div>
-<br/>
-<br/>
 
-<hr/>
-
+<!-- Container for the main content -->
 <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card mb-10 shadow-sm" id="custom_card">
+    <!-- Left Container for Extracted Details -->
+    <div class="left-container">
+        <div class="result">
+            <h2>Extracted Details</h2>
+            <div class="card">
                 <h4>Original Data</h4>
                 <p>{{ rawtext }}</p>
             </div>
+
+            <div class="card">
+                <h4>Extracted Entities</h4>
+                <ul>
+                    {% for entity in entities %}
+                        {% if entity.label != 'DESCRIPTION' %}
+                            <li><strong>{{ entity.label }}:</strong> {{ entity.text }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Button to Refresh or Return -->
+            <a href="{% url 'index' %}" class="btn-refresh">Back to Home</a>
         </div>
-        <div class="col-md-6">
-            <div class="card mb-10 shadow-sm" id="custom_card2">
-                <h4>Result of Data</h4>
-                <p>{{ result|safe }}</p>
+    </div>
+
+    <!-- Right Container for Description and Usage -->
+    <div class="right-container">
+        <div class="result">
+            <h2>Description and Usage</h2>
+            <div class="card">
+                {% for entity in entities %}
+                    {% if entity.label == 'DESCRIPTION' %}
+                        <p>{{ entity.text }}</p>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>
 </div>
 
-<!-- JQuery -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- Bootstrap tooltips -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
-<!-- MDB core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.3/js/mdb.min.js"></script>
+<!-- Error Message -->
+{% if error %}
+    <div class="error-message">
+        <p>{{ error }}</p>
+    </div>
+{% endif %}
 
-<script src="{% static 'js/main.js' %}"></script>
-<script type="text/javascript">
-    $('.file_upload').file_upload();
-</script>
 </body>
 </html>

@@ -26,7 +26,7 @@
             margin-top: -50px; /* Adjusted to bring it to the center-top */
             margin-left: -30px; /* Moved more to the left */
         }
-        
+
         .title {
             color: #fff;
             font-size: 32px;
@@ -36,7 +36,7 @@
             white-space: nowrap; /* Prevents text from wrapping */
             margin-left: -200px; /* Moved more to the left */
         }
-        
+
         .login { 
             width: 100%;
             padding: 20px;
@@ -44,7 +44,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
-        
+
         .login h1 { 
             color: #fff; 
             text-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
@@ -53,7 +53,7 @@
             margin-bottom: 20px;
             font-size: 24px; /* Increased font size for consistency */
         }
-        
+
         input { 
             width: calc(100% - 20px); 
             margin-bottom: 10px; 
@@ -65,11 +65,11 @@
             color: #eee; /* Changed font color to dark white */
             border-radius: 4px;
         }
-        
+
         input:focus { 
             background: rgba(255, 255, 255, 0.2);
         }
-        
+
         .btn { 
             width: 100%; 
             padding: 10px; 
@@ -81,7 +81,7 @@
             cursor: pointer; 
             transition: background-color 0.3s ease;
         }
-        
+
         .btn:hover { 
             background-color: #3762bc; 
         }
@@ -97,6 +97,18 @@
         .login a:hover {
             text-decoration: underline;
         }
+
+        .error-message {
+            color: #ff4d4d;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .success-message {
+            color: #28a745;
+            font-size: 14px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -106,15 +118,27 @@
         </div>
         <div class="login">
             <h1>Login</h1>
-            <form method="post" action="{% url 'login' %}">  <!-- Use the named URL -->
+            
+            <!-- Display error or success message here -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="{% if message.tags == 'error' %}error-message{% elif message.tags == 'success' %}success-message{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            <!-- Login Form -->
+            <form method="post" action="{% url 'login' %}">
                 {% csrf_token %}
                 <input type="text" name="username" placeholder="Username" required="required" />
                 <input type="password" name="password" placeholder="Password" required="required" />
-                <button type="submit" class="btn btn-primary btn-block btn-large">Let me in.</button>
+                <button type="submit" class="btn btn-primary btn-block btn-large"> Sign In</button>
             </form>
-            {% if error %}
-                <p>{{ error }}</p>
-            {% endif %}
-            <a href="{% url 'sign_up' %}">Not registered?</a>
+            
+            <!-- Link to Sign Up page if not registered -->
+            <a href="{% url 'sign_up' %}">Not registered ?</a>
         </div>
     </div>
+</body>
+</html>

@@ -1,76 +1,199 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>DisplaCify App</title>
+    <title>Medicine Genie App</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'main.css' %}" />
 
-    <style type="text/css">
-        .main-section {
-            margin: 0 auto;
-            padding: 20px;
-            margin-top: 100px;
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- CSS for custom styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-image: url('https://img.pikbest.com/ai/illus_our/20230426/72368d3eab070938f1329197ac66fac7.jpg!w700wp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 420px;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .title {
+            font-size: 32px;
+            text-align: center;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
             background-color: #fff;
-            box-shadow: 0px 0px 20px #c1c1c1;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            outline: none;
+            transition: border 0.3s;
         }
-        #custom_card {
-            background-color: grey;
-            color: #fff;
-            padding: 10px;
+
+        .form-control:focus {
+            border-color: #4a77d4;
         }
-        #custom_card2 {
-            background-color: #383838;
+
+        .btn-custom {
+            width: 48%;
+            padding: 14px;
+            font-size: 18px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-refresh {
+            background-color: #f0ad4e;
+        }
+
+        .btn-refresh:hover {
+            background-color: #ec971f;
+        }
+
+        .btn-submit {
+            background-color: #4a77d4;
+        }
+
+        .btn-submit:hover {
+            background-color: #3762bc;
+        }
+
+        .btn-logout {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            font-size: 18px;
+            background-color: #d9534f;
             color: #fff;
-            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-logout:hover {
+            background-color: #c9302c;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            text-align: center;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .footer p {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .jumbotron {
+            background-color: #673AB7;
+            color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+
+        .jumbotron h2 {
+            font-size: 36px;
+            font-weight: 600;
+        }
+
+        .jumbotron p {
+            font-size: 18px;
+            margin-top: 10px;
         }
     </style>
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.3/css/mdb.min.css" rel="stylesheet">
-
 </head>
 <body>
 
-<div class="jumbotron" style="background:#673AB7;color:#fff">
-    <div class="container">
-        <h2 class="display-3">Displaying Medical Data</h2>
-        <p>Using Spacy's Custom Named Entity Recognition System</p>
-        <p>
-            <a class="btn btn-success waves-effect btn-lg" href="{% url 'index' %}" role="button">Refresh &raquo;</a>
-            <a class="btn btn-danger waves-effect btn-lg" href="{% url 'logout' %}" role="button">Logout</a>
-        </p>
-    </div>
+<div class="jumbotron text-center">
+    <h2>MediKnow</h2>
+    <p><b>Empowering You with Accurate Medical Knowledge</b></p>
 </div>
-<br/>
-<br/>
+
 <div class="container">
+    <h3 class="title"> Medicine Name </h3>
     <form method="POST" action="results/">
         {% csrf_token %}
-        <textarea rows="5" cols="5" required="true" name="rawtext" class="form-control"></textarea>
-        <button type="reset" class="btn btn-primary"><i class="fa fa-eraser"></i> Clear</button>
-        <button type="submit" class="btn btn-info"><i class="fa fa-database"></i> Submit</button>
+        <div class="form-group">
+            <input type="text" name="rawtext" class="form-control" placeholder="Enter Medicine Name" required>
+        </div>
+        <div class="form-group text-center">
+            <button type="reset" class="btn-custom btn-refresh"><i class="fa fa-eraser"></i> Clear</button>
+            <button type="submit" class="btn-custom btn-submit"><i class="fa fa-database"></i> Submit</button>
+        </div>
+    </form>
+
+    <!-- Logout Button -->
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn-logout"><i class="fa fa-sign-out-alt"></i> Logout</button>
     </form>
 </div>
 
+<div class="footer">
+    <p>Powered by Gemini</p>
+</div>
+
 <!-- JQuery -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 <!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.3/js/mdb.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.3/js/mdb.min.js"></script>
 
 <script src="{% static 'js/main.js' %}"></script>
-<script type="text/javascript">
-    $('.file_upload').file_upload();
-</script>
+
 </body>
 </html>
