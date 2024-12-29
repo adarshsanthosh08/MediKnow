@@ -1,8 +1,8 @@
 # MediKnow: Empowering You with Accurate Medical Knowledge
 
-#### Video Demo: [Demo Url](https://www.youtube.com/watch?v=XHP4gbbZhRE)
+### Video Demo: [Demo Url](https://www.youtube.com/watch?v=XHP4gbbZhRE)
 
-#### Description:
+### Description:
 
 **MediKnow** is an advanced medical knowledge platform designed to provide users with accurate and comprehensive information about medications. Using **Gemini's latest generation AI model**, MediKnow can accurately extract entities from the medicine names entered by the user and provide detailed descriptions, usage, and other relevant information in an easy-to-understand format. The platform's **stylish and user-friendly interface** ensures convenience while offering precise results for medical inquiries.
 
@@ -32,7 +32,7 @@ The **MediKnow** project is divided into two main directories:
    - **`templates/`**: Contains HTML files for the user interface, designed with an aesthetically pleasing and modern look.
    - **`static/`**: Houses CSS and JavaScript files that contribute to the visual design and interactivity of the platform.
 
-### How to Set Up:
+### Todo:
 
 To set up the environment for **MediKnow**, follow these steps:
 
