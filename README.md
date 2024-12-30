@@ -1,6 +1,6 @@
 # MediKnow: Empowering You with Accurate Medical Knowledge
 
-### Video Demo: [Demo Url](https://www.youtube.com/watch?v=XHP4gbbZhRE)
+### Video Demo: https://youtu.be/wMbjWo24Tpo
 
 ### Description:
 
